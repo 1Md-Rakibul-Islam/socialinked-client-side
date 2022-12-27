@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import PostCard from '../Shared/PostCard/PostCard';
-import CreatePost from '../../Pages/Home/CreatePost/CreatePost';
 import { useQuery } from '@tanstack/react-query';
-import Loading from '../Shared/Loading/Loading';
+import Loading from '../../Shared/Loading/Loading';
+import PostCard from '../../Shared/PostCard/PostCard';
 
-const Media = () => {
+const TopPosts = () => {
 
     const { data: posts = [], refetch, isLoading } = useQuery({
         queryKey: ['posts'],
@@ -21,11 +20,11 @@ const Media = () => {
         <Loading></Loading>
     }
 
+
     return (
         <section>
             <div>
-                <CreatePost></CreatePost>
-                <div className='grid gap-6 mx-5 md:mx-20 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                <div className='grid gap-6 mx-5 md:mx-60 grid-cols-1 '>
                     {
                         posts.map( post => <PostCard
                             key={PostCard._id}
@@ -38,4 +37,4 @@ const Media = () => {
     );
 };
 
-export default Media;
+export default TopPosts;

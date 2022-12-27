@@ -25,10 +25,10 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  if (token) {
-    console.log(token);
-    navigate(from, { replace: true });
-  }
+  // if (token) {
+  //   console.log(token);
+  //   navigate(from, { replace: true });
+  // }
 
   const handelLogin = (data) => {
     // console.log(data);
