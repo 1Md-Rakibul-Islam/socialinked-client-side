@@ -3,7 +3,7 @@ import React from 'react';
 const Page404 = () => {
     return (
         <div>
-        <h2 className="text-center text-9xl my-52 text-warning">
+        <h2 className="text-center text-9xl  text-warning">
           404
           <span>
             <br />
