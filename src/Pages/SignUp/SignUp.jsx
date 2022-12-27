@@ -25,9 +25,9 @@ const SignUp = () => {
 
   // console.log(token, "gvjvhh");
 
-  if (token) {
-    navigate("/");
-  }
+  // if (token) {
+  //   navigate("/");
+  // }
 
   const handelSignUp = (data) => {
     // console.log(data);
@@ -59,7 +59,8 @@ const SignUp = () => {
 
               updateUser(userInfo)
                 .then(() => {
-                  saveUser(data.option, data.name, data.email, imageData.data.url);
+                  console.log( data.name, data.email, data.education, data.address, imageData.data.url);
+                  // saveUser( data.name, data.email, data.education, data.address, imageData.data.url);
                 })
                 .catch((error) => console.log(error));
             }
@@ -77,8 +78,18 @@ const SignUp = () => {
     loginProvider(googleProvider)
       .then((result) => {
         const user = result.user;
-        // console.log(user.email);
-        saveUser("buyer", user?.displayName, user?.email, user?.photoURL);
+        // console.log(user);
+  
+        const info = {
+          name: user?.displayName,
+          email: user?.email,
+          image: user?.photoURL,
+          education: 'un',
+          address: 'un'
+        }
+        // saveUser( data.education, data.address, imageData.data.url);
+        // saveUser(user?.name, user?.email, user?.photoURL, {education: 'un'}, {address: 'un'},);
+        console.log( info);
 
         setLoading(false);
         navigate(from, { replace: true });
@@ -118,9 +129,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="md:w-[800px] md:mx-auto mx-5 h-[720px] flex justify-center items-center">
+    <div className=" md:w-[800px] md:mx-auto mx-5 md:h-[640px] flex justify-center items-center">
       <div className="card w-full border shadow-2xl p-7">
-        <h2 className="text-3xl my-5 text-center text-primary">Sign Up</h2>
+        <h2 className="text-3xl my-5 text-center text-primary font-bold">Sign Up</h2>
         <form onSubmit={handleSubmit(handelSignUp)} calssName="card">
           <div className="grid justify-center gap-3 grid-cols-1 md:grid-cols-2">
             <div className="form-control">
@@ -144,9 +155,33 @@ const SignUp = () => {
                   required: true,
                 })}
                 type="file"
-                className="file-input file-input-bordered"
+                className="file-input file-input-bordered file-input-primary"
               />
               {errors?.email && <small className="text-error mt-2">{errors.email?.message}</small>}
+            </div>
+            <div className="form-control">
+              <label htmlFor="label">
+                <span>Education</span>
+              </label>
+              <input
+                {...register("education", {
+                  required: "School/Collage/University is required",
+                })}
+                className="input input-bordered"
+              />
+              {errors?.education && <small className="text-error mt-2">{errors.education?.message}</small>}
+            </div>
+            <div className="form-control">
+              <label htmlFor="label">
+                <span>Address</span>
+              </label>
+              <input
+                {...register("address", {
+                  required: "Address is required",
+                })}
+                className="input input-bordered"
+              />
+              {errors?.address && <small className="text-error mt-2">{errors.address?.message}</small>}
             </div>
             <div className="form-control">
               <label htmlFor="label">

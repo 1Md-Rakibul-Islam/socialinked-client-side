@@ -70,7 +70,7 @@ const NavBar = () => {
           </ul>
         </div>
         <a className="justify-between items-baseline md:flex hidden">
-          <img className="w-[120px]" src={socialinked} alt="" srcset="" />
+          <img className="w-[120px]" src={socialinked} alt="" />
           <h2 className="text-purple-800 text-3xl font-bold">ed</h2>
         </a>
       </div>
@@ -87,7 +87,7 @@ const NavBar = () => {
       <div className="navbar-end">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="rounded-full ">{user?.email ? <img src={user?.photoURL} /> : <FaUser className="text-3xl"></FaUser>}</div>
+            <div className="rounded-full ">{user?.email ? <img src={user?.photoURL} alt="" /> : <FaUser className="text-3xl"></FaUser>}</div>
           </label>
           <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
             <li>
