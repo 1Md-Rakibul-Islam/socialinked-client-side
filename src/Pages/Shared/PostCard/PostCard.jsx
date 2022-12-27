@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FaEllipsisV, FaHeart, FaCommentDots, FaShare, FaComment } from "react-icons/fa";
 
 const PostCard = ({ post }) => {
-  const { creatorName, creatorImage, creatorEmail, uploadDate, react, image, description } = post;
+  const { _id, creatorName, creatorImage, creatorEmail, uploadDate, react, image, description } = post;
   return (
     <div className="card rounded-none bg-base-100 shadow-xl">
       <div className="flex justify-between p-4 items-center">
@@ -22,7 +23,9 @@ const PostCard = ({ post }) => {
       <div className="card-body px-5">
         <p>
           {description.length > 40 ? description.slice(0, 80) + "....." : description}
-          <button className="font-bold text-md">See more</button>
+          <Link to={`/postDetails/${_id}`}>
+            <button className="font-bold text-md">See more</button>
+          </Link>
         </p>
       </div>
       <figure>

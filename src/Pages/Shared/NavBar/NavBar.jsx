@@ -69,16 +69,16 @@ const NavBar = () => {
             }
           </ul>
         </div>
-        <a className="justify-between items-baseline md:flex hidden">
+        <Link to='/' className="justify-between items-baseline md:flex hidden">
           <img className="w-[120px]" src={socialinked} alt="" />
           <h2 className="text-purple-800 text-3xl font-bold">ed</h2>
-        </a>
+        </Link>
       </div>
       <div className="form-control">
         <input type="text" placeholder="Search" className="md:w-96 w-40 input input-bordered" />
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal p-0">
+        <ul className="menu menu-horizontal z-50 p-0">
           {
             navItem
           }

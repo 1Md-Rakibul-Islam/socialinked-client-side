@@ -7,6 +7,7 @@ import Login from "../../Pages/Login/Login";
 import Page404 from "../../Pages/Shared/404/Page404";
 import Media from "../../Pages/Media/Media";
 import Message from "../../Pages/Message/Message";
+import PostDetails from "../../Pages/Shared/PostDetails/PostDetails";
 
 export const router = createBrowserRouter([
   {
@@ -22,11 +23,20 @@ export const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "media",
+        path: "/media",
         element: <Media></Media>
       },
       {
-        path: "message",
+        path: "/postDetails/:_id",
+        element: <PostDetails></PostDetails>,
+        loader: async() => {
+          const res = await fetch(`posts.json/${_id}`);
+          const data = await res.json();
+          return data;
+        }
+      },
+      {
+        path: "/message",
         element: <Message></Message>
       },
       {
