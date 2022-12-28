@@ -9,7 +9,7 @@ const Media = () => {
     const { data: posts = [], refetch, isLoading } = useQuery({
         queryKey: ['posts'],
         queryFn: async () => {
-            const res = await fetch('posts.json');
+            const res = await fetch('https://socialinked.vercel.app/posts');
             const data = await res.json();
             return data;
         }

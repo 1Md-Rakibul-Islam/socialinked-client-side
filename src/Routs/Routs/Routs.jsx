@@ -28,12 +28,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/postDetails/:_id",
-        element: <PostDetails></PostDetails>,
-        loader: async() => {
-          const res = await fetch(`posts.json/${_id}`);
-          const data = await res.json();
-          return data;
-        }
+        loader: ({ params }) => fetch(`https://socialinked.vercel.app/post/${params._id}`),
+        element: <PostDetails></PostDetails>
       },
       {
         path: "/message",
