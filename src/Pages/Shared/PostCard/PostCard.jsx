@@ -1,11 +1,67 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaEllipsisV, FaHeart, FaCommentDots, FaShare, FaComment } from "react-icons/fa";
+import { FaEllipsisV, FaHeart, FaCommentDots, FaShare, FaComment, FaRegPaperPlane } from "react-icons/fa";
+import { useContext } from "react";
+import { AuthContext } from "../../../Context/AuthProvider/AuthProvider";
+import Loading from "../Loading/Loading";
+import useCurrentUser from "../../../Hooks/useCurrentUser";
 
 const PostCard = ({ post }) => {
   const { _id, creatorName, creatorImage, creatorEmail, uploadDate, react, image, description } = post;
+  
+  const { user } = useContext(AuthContext);
+  const [currentUser, isCurrentUserLoading] = useCurrentUser(user?.email);
+  // console.log(currentUser);
+  if (isCurrentUserLoading) {
+    return <Loading></Loading>
+  }
+
+  const { coverPhoto, educationInstitute, userEmail, userName, userPhoto, address } = currentUser;
+
+    //date of publish
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let currentDate = `${day}-${month}-${year}`;
+
+  const handleComment = event => {
+    event.preventDefault();
+    const comment = event.target.comment.value;
+    // console.log(comment);
+
+    const commentInfo = {
+      "postId": _id,
+      "commenterNamer": userName,
+      "commenterPhoto": userPhoto,
+      "commenterEmail": userEmail,
+      "comment": comment,
+      "commentTime": currentDate
+    }
+
+    // create a post
+    fetch('https://socialinked.vercel.app/comments', {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        // authorization: `bearer ${localStorage.getItem('accessToken')}`
+      },
+      body: JSON.stringify(commentInfo)
+    })
+    .then( res => res.json())
+    .then( data => {
+      console.log(data);
+      if (data.acknowledged) {
+        toast.success('Comment Successfully');
+        navigate(`/postDetails/${_id}`);
+        refetch();
+      }
+    })
+
+  }
+  
   return (
-    <div className="card hover:border hover:border-primary hover:-translate-y-2 rounded-sm bg-base-100 shadow-xl">
+    <div className="card hover:-translate-y-2 rounded-sm bg-base-100 shadow-xl">
       <div className="flex justify-between p-4 items-center">
         <div className="flex gap-2">
           <figure className="w-[55px] h-[55px] border-2 border-primary  overflow-hidden rounded-full">
@@ -57,11 +113,11 @@ const PostCard = ({ post }) => {
             </button>
         </div>
       </div>
-      <div className="text-center my-5">
-        <Link to={`/postDetails/${_id}`}>
-          <span className=''>Write a comment heare.....</span>
-        </Link>
-      </div>
+      <form onSubmit={handleComment} className="flex gap-3 md:gap-5 my-5 mx-5 md:mx-10">
+        <textarea name="comment" className="textarea w-full h-10 rounded-3xl overflow-hidden" placeholder={`Write a comment heare....`
+          }></textarea>
+          <button type="submit" className=""><FaRegPaperPlane className="text-2xl"></FaRegPaperPlane></button>
+      </form>
       
     </div>
   );

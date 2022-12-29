@@ -16,7 +16,7 @@ const About = () => {
     return <Loading></Loading>
   }
 
-  const {coverPhoto, educationInstitute, userEmail, userName, userPhoto, address } = currentUser;
+  const { coverPhoto, educationInstitute, userEmail, userName, userPhoto, address } = currentUser;
   
 
   return (
