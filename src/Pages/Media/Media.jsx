@@ -15,7 +15,6 @@ const Media = () => {
         }
     })
 
-    // const [posts, setPosts] = useState([]);
 
     if (isLoading) {
         <Loading></Loading>
@@ -24,10 +23,11 @@ const Media = () => {
     return (
         <section>
             <div>
-                <CreatePost></CreatePost>
+                <CreatePost refetch={refetch}></CreatePost>
                 <div className='grid gap-6 mx-5 md:mx-20 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
                     {
-                        posts.map( post => <PostCard
+                        // reverse posts with last post
+                        [...posts].reverse().map( post => <PostCard
                             key={PostCard._id}
                             post={post}
                         ></PostCard>)

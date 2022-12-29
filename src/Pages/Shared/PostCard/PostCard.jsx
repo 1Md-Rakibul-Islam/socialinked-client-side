@@ -5,7 +5,7 @@ import { FaEllipsisV, FaHeart, FaCommentDots, FaShare, FaComment } from "react-i
 const PostCard = ({ post }) => {
   const { _id, creatorName, creatorImage, creatorEmail, uploadDate, react, image, description } = post;
   return (
-    <div className="card hover:border hover:border-primary hover:-translate-y-3 rounded-sm bg-base-100 shadow-xl">
+    <div className="card hover:border hover:border-primary hover:-translate-y-2 rounded-sm bg-base-100 shadow-xl">
       <div className="flex justify-between p-4 items-center">
         <div className="flex gap-2">
           <figure className="w-[55px] h-[55px] border-2 border-primary  overflow-hidden rounded-full">
@@ -20,11 +20,12 @@ const PostCard = ({ post }) => {
           <FaEllipsisV className="texl-2xl"></FaEllipsisV>
         </button>
       </div>
-      <div className="card-body px-5">
+      <div className="card-body py-3 px-5">
         <p>
-          {description.length > 90 ? description.slice(0, 90) + "....." : description}
+          {description?.length > 90 ? description.slice(0, 90) + "......" : description + "......"}
+          {/* { description} */}
           <Link to={`/postDetails/${_id}`}>
-            <button className="font-bold text-md">See more</button>
+            <button className="font-bold text-md">See Details</button>
           </Link>
         </p>
       </div>
@@ -48,7 +49,7 @@ const PostCard = ({ post }) => {
             </button>
             <Link to={`/postDetails/${_id}`}>
               <button className="flex gap-2 items-center">
-                  <FaComment className="text-lg"></FaComment> 5 <span>Write a comment heare......</span>
+                  <FaComment className="text-lg"></FaComment> 5
               </button>
             </Link>
             <button className="flex gap-2 items-center">
@@ -56,6 +57,12 @@ const PostCard = ({ post }) => {
             </button>
         </div>
       </div>
+      <div className="text-center my-5">
+        <Link to={`/postDetails/${_id}`}>
+          <span className=''>Write a comment heare.....</span>
+        </Link>
+      </div>
+      
     </div>
   );
 };

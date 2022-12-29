@@ -8,7 +8,7 @@ const TopPosts = () => {
     const { data: posts = [], refetch, isLoading } = useQuery({
         queryKey: ['posts'],
         queryFn: async () => {
-            const res = await fetch('https://socialinked.vercel.app/posts');
+            const res = await fetch('https://socialinked.vercel.app/topPosts');
             const data = await res.json();
             return data;
         }
@@ -29,6 +29,7 @@ const TopPosts = () => {
                         posts.map( post => <PostCard
                             key={PostCard._id}
                             post={post}
+                            refetch={refetch}
                         ></PostCard>)
                     }
                 </div>

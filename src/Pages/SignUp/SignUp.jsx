@@ -41,6 +41,8 @@ const SignUp = () => {
         console.log(user);
 
         const image = data.photo[0];
+        console.log(image);
+        
         const formData = new FormData();
         formData.append("image", image);
 

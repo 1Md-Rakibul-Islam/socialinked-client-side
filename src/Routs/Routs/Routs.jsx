@@ -8,6 +8,7 @@ import Page404 from "../../Pages/Shared/404/Page404";
 import Media from "../../Pages/Media/Media";
 import Message from "../../Pages/Message/Message";
 import PostDetails from "../../Pages/Shared/PostDetails/PostDetails";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ export const router = createBrowserRouter([
       {
         path: "/postDetails/:_id",
         loader: ({ params }) => fetch(`https://socialinked.vercel.app/post/${params._id}`),
-        element: <PostDetails></PostDetails>
+        element: <PrivateRoute><PostDetails></PostDetails></PrivateRoute>
       },
       {
         path: "/message",
