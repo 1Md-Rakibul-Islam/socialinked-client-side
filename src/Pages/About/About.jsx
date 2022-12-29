@@ -2,10 +2,22 @@ import React from "react";
 import { useContext } from "react";
 import { FaMapMarkerAlt, FaUniversity, FaUserGraduate, FaUserCircle, FaPaperPlane } from "react-icons/fa";
 import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
+import useCurrentUser from "../../Hooks/useCurrentUser";
 import CreatePost from "../Home/CreatePost/CreatePost";
+import Loading from "../Shared/Loading/Loading";
 
 const About = () => {
   const { user } = useContext(AuthContext);
+
+  const [currentUser, isCurrentUserLoading] = useCurrentUser(user?.email);
+  // console.log(currentUser);
+
+  if (isCurrentUserLoading) {
+    return <Loading></Loading>
+  }
+
+  const {coverPhoto, educationInstitute, userEmail, userName, userPhoto, address } = currentUser;
+  
 
   return (
     <section className="-mt-10">
@@ -20,18 +32,18 @@ const About = () => {
           <div className="">
             <div>
               <div className="w-full h-[45vh] border border-primary overflow-hidden bg-slate-200">
-                <img className="w-full" src={user?.photoUR} alt="" />
+                <img className="w-full" src={coverPhoto} alt="" />
               </div>
 
               <div className="flex justify-between items-center md:mx-20 mx-10 ">
                 <div className="">
                   <div className="-mt-48 mb:mb-20 mb-5 w-[300px] h-[300px] border-4 border-primary rounded-full overflow-hidden bg-slate-200">
-                    <img className="w-full" src={user?.photoURL} alt="" />
+                    <img className="w-full" src={userPhoto} alt="" />
                   </div>
                   <div className="flex flex-col gap-5">
                     <div className="flex items-center justify-items-center gap-x-4">
                       <FaUserCircle className="text-3xl "></FaUserCircle>
-                      <h2 className="text-3xl font-bold">{user?.displayName}</h2>
+                      <h2 className="text-3xl font-bold">{userName}</h2>
                     </div>
                     <div className="flex items-center justify-items-center gap-x-4">
                       <FaPaperPlane className="text-3xl "></FaPaperPlane>
@@ -40,10 +52,16 @@ const About = () => {
 
                     <h1 className="text-2xl font-semibold">About</h1>
                     <div className="flex items-center justify-items-center gap-x-4">
-                      <FaUserGraduate className="text-3xl "></FaUserGraduate> <h4 className="text-xl">Rajshahi University</h4>
+                      <FaUserGraduate className="text-3xl "></FaUserGraduate>
+                      <h4 className="text-xl">
+                        {educationInstitute}
+                      </h4>
                     </div>
                     <div className="mb:my-20 mb-5 flex items-center justify-items-center gap-x-4">
-                      <FaMapMarkerAlt className="text-3xl "></FaMapMarkerAlt> <h4 className="text-xl">Dhaka, Bangladesh</h4>
+                      <FaMapMarkerAlt className="text-3xl "></FaMapMarkerAlt>
+                        <h4 className="text-xl">
+                          {address}
+                        </h4>
                     </div>
                   </div>
                 </div>
