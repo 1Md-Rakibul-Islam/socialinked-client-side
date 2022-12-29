@@ -1,0 +1,29 @@
+[
+    {
+        "_id": 0,
+        "userName": "Mr. Rakibul Islam",
+        "userEmail": "rakibul9bd@gamil.com",
+        "userPhoto": "",
+        "coverPhoto": "",
+        "address": "Baraigram, Natore, Bangaldesh",
+        "educationInstitute": "Shariatpur Polytecinc Institute"
+    },
+    {
+        "_id": 1,
+        "userName": "Nazrul Islam",
+        "userEmail": "nazrul@gamil.com",
+        "userPhoto": "",
+        "coverPhoto": "",
+        "address": "Dhaka, Bangaldesh",
+        "educationInstitute": "Bangladesh University of Engineering Techonology"
+    },
+    {
+        "_id": 2,
+        "userName": "Renuka Beguam",
+        "userEmail": "renuka@gamil.com",
+        "userPhoto": "",
+        "coverPhoto": "",
+        "address": "Natore",
+        "educationInstitute": "Rajshahi University"
+    }  
+]

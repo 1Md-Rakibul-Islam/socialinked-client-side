@@ -53,16 +53,44 @@ const SignUp = () => {
         })
           .then((res) => res.json())
           .then((imageData) => {
+            setLoading(true);
             if (imageData.status) {
               const userInfo = {
                 displayName: data.name,
                 photoURL: imageData.data.url,
               };
 
+              const profilePhoto = imageData.data.url;
+
               updateUser(userInfo)
                 .then(() => {
-                  console.log( data.name, data.email, data.education, data.address, imageData.data.url);
-                  // saveUser( data.name, data.email, data.education, data.address, imageData.data.url);
+
+                  //upload cover photo
+                  const coverPhoto = data.coverPhoto[0];
+                  console.log(coverPhoto);
+                  
+                  const formData = new FormData();
+                  formData.append("image", coverPhoto);
+          
+                  const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+                  fetch(url, {
+                    method: "POST",
+                    body: formData,
+                  })
+                    .then((res) => res.json())
+                    .then((imageData) => {
+                      if (imageData.status) {
+
+                        console.log( data?.name, data?.email, imageData.data.url, data?.coverPhoto, data?.address, data?.education );
+                        saveUser(data?.name, data?.email, profilePhoto, imageData.data.url, data?.address, data?.education);
+                        setLoading(false);
+                        toast.success('Account created successfully');
+                        navigate('/');
+                      }
+                    });
+
+                  // console.log( data?.name, data?.email, imageData.data.url, data?.coverPhoto, data?.address, data?.education );
+                  // saveUser(data?.name, data?.email, imageData.data.url, data?.coverPhoto, data?.address, data?.education)
                 })
                 .catch((error) => console.log(error));
             }
@@ -90,8 +118,9 @@ const SignUp = () => {
           address: 'un'
         }
         // saveUser( data.education, data.address, imageData.data.url);
-        // saveUser(user?.name, user?.email, user?.photoURL, {education: 'un'}, {address: 'un'},);
-        console.log( info);
+        saveUser(user?.name, user?.email, user?.photoURL, 'set cover photo', 'set address', 'set Institute');
+        // saveUser(user?.name, user?.email, user?.photoURL, coverPhoto, address, educationInstitute);
+        // console.log( info);
 
         setLoading(false);
         navigate(from, { replace: true });
@@ -103,17 +132,19 @@ const SignUp = () => {
   };
 
   // save profile on db
-  const saveUser = (role, userName, email, userImage) => {
+  const saveUser = ( userName, userEmail, userPhoto, coverPhoto, address, educationInstitute ) => {
     const user = {
-      role,
       userName,
-      email,
-      userImage,
+      userEmail,
+      userPhoto,
+      coverPhoto,
+      address,
+      educationInstitute
     };
 
     // console.log( 'saveUser', user);
 
-    fetch("https://sokher-furniture-1md-rakibul-islam.vercel.app/users", {
+    fetch("http://localhost:5000/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -123,10 +154,9 @@ const SignUp = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("save user", data);
+        // console.log("send user to backend", data);
         setCreatedUserEmail(email);
         toast.success("User created Successfully");
-        console.log(email);
       });
   };
 
@@ -150,7 +180,7 @@ const SignUp = () => {
             </div>
             <div className="form-control">
               <label htmlFor="label">
-                <span>Photo</span>
+                <span>Profile Photo</span>
               </label>
               <input
                 {...register("photo", {
@@ -159,7 +189,20 @@ const SignUp = () => {
                 type="file"
                 className="file-input file-input-bordered file-input-primary"
               />
-              {errors?.email && <small className="text-error mt-2">{errors.email?.message}</small>}
+              {errors?.photo && <small className="text-error mt-2">{errors.photo?.message}</small>}
+            </div>
+            <div className="form-control">
+              <label htmlFor="label">
+                <span>Cover Photo</span>
+              </label>
+              <input
+                {...register("coverPhoto", {
+                  required: true,
+                })}
+                type="file"
+                className="file-input file-input-bordered file-input-primary"
+              />
+              {errors?.coverPhoto && <small className="text-error mt-2">{errors.coverPhoto?.message}</small>}
             </div>
             <div className="form-control">
               <label htmlFor="label">

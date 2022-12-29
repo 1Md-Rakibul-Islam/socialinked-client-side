@@ -3,11 +3,12 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider/AuthProvider";
 
 const CreatePost = ( {refetch} ) => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -71,6 +72,7 @@ const CreatePost = ( {refetch} ) => {
             console.log(data);
             if (data.acknowledged) {
               toast.success('Post Successfully');
+              navigate('/media');
               refetch();
             }
           })
