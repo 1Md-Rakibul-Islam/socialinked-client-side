@@ -79,10 +79,8 @@ const EditModal = ({currentUser, refetch}) => {
                         }
 
                         // send update data to database
-                        // fetch('https://socialinked.vercel.app/users', {
-                        // https://socialinked.vercel.app/users?email=${email}
 
-                        fetch(`http://localhost:5000/users/${_id}`, {
+                        fetch(`https://socialinked.vercel.app/users/${_id}`, {
                           method:"PUT",
                           headers: {
                             "content-type": "application/json",
