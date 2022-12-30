@@ -3,11 +3,28 @@ import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaEllipsisV, FaHeart, FaCommentDots, FaShare, FaComment } from "react-icons/fa";
 import Comment from "../Comment/Comment";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../Loading/Loading";
 
 const PostDetails = () => {
   const post = useLoaderData();
   // console.log(post);
   const { _id, creatorName, creatorImage, creatorEmail, uploadDate, react, image, description } = post;
+
+    const { data: comments = [], refetch, isLoading } = useQuery({
+      queryKey: ['comments'],
+      queryFn: async () => {
+          const res = await fetch(`https://socialinked.vercel.app/comments/${_id}`);
+          const data = await res.json();
+          return data;
+      }
+  })
+
+  // const [posts, setPosts] = useState([]);
+
+  if (isLoading) {
+      <Loading></Loading>
+  }
 
   return (
     <section>
@@ -41,14 +58,14 @@ const PostDetails = () => {
             </div>
           </div>
         </div>
-        <div className="grid gap-5 grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:mx-10 mx-4">
-          <Comment></Comment>
-          <Comment></Comment>
-          <Comment></Comment>
-          <Comment></Comment>
-          <Comment></Comment>
-          <Comment></Comment>
-          <Comment></Comment>
+        <div className="flex gap-4 justify-evenly items-center justify-items-center md:mx-10 mx-4">
+          {
+            comments?.map( commentInfo => <Comment
+              key={commentInfo._id}
+              commentInfo={commentInfo}
+            ></Comment>
+            )
+          }
         </div>
       </div>
     </section>

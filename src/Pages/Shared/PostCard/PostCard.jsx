@@ -1,20 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEllipsisV, FaHeart, FaCommentDots, FaShare, FaComment, FaRegPaperPlane } from "react-icons/fa";
 import { useContext } from "react";
 import { AuthContext } from "../../../Context/AuthProvider/AuthProvider";
 import Loading from "../Loading/Loading";
 import useCurrentUser from "../../../Hooks/useCurrentUser";
+import toast from "react-hot-toast";
 
 const PostCard = ({ post }) => {
   const { _id, creatorName, creatorImage, creatorEmail, uploadDate, react, image, description } = post;
   
   const { user } = useContext(AuthContext);
-  const [currentUser, isCurrentUserLoading] = useCurrentUser(user?.email);
+  const navigate = useNavigate();
+  const [currentUser, refetch, isCurrentUserLoading] = useCurrentUser(user?.email);
   // console.log(currentUser);
-  if (isCurrentUserLoading) {
-    return <Loading></Loading>
-  }
+  // if (isCurrentUserLoading) {
+  //   return <Loading></Loading>
+  // }
 
   const { coverPhoto, educationInstitute, userEmail, userName, userPhoto, address } = currentUser;
 
@@ -29,6 +31,11 @@ const PostCard = ({ post }) => {
     event.preventDefault();
     const comment = event.target.comment.value;
     // console.log(comment);
+
+    // isCurrentUserLoading
+    if (!user?.email) {
+      return navigate('/login');
+    }
 
     const commentInfo = {
       "postId": _id,
@@ -98,7 +105,7 @@ const PostCard = ({ post }) => {
                 <FaCommentDots className="text-xl"></FaCommentDots> 5
             </div>
         </div> */}
-        {/* <div className="divider m-0"></div> */}
+
         <div className="flex justify-between p-2">  
             <button className="flex gap-2 items-center">
                 <FaHeart className="text-lg"></FaHeart><span>Love</span> {react}
@@ -114,7 +121,7 @@ const PostCard = ({ post }) => {
         </div>
       </div>
       <form onSubmit={handleComment} className="flex gap-3 md:gap-5 my-5 mx-5 md:mx-10">
-        <textarea name="comment" className="textarea w-full h-10 rounded-3xl overflow-hidden" placeholder={`Write a comment heare....`
+        <textarea name="comment" required className="textarea w-full h-10 rounded-3xl overflow-hidden" placeholder={`Write a comment heare....`
           }></textarea>
           <button type="submit" className=""><FaRegPaperPlane className="text-2xl"></FaRegPaperPlane></button>
       </form>

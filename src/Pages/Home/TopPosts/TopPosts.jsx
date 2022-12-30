@@ -26,7 +26,7 @@ const TopPosts = () => {
             <div>
                 <div className='grid gap-6 mx-5 md:mx-60 grid-cols-1 '>
                     {
-                        posts.map( post => <PostCard
+                        posts?.map( post => <PostCard
                             key={PostCard._id}
                             post={post}
                             refetch={refetch}

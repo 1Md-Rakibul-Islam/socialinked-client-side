@@ -16,7 +16,7 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const { createUser, updateUser, loginProvider, setLoading } = useContext(AuthContext);
+  const { createUser, updateUser, loginProvider } = useContext(AuthContext);
   const [signUpError, setSignUpError] = useState("");
   const [createdUserEmail, setCreatedUserEmail] = useState("");
   const [token] = useToken(createdUserEmail);
@@ -38,10 +38,10 @@ const SignUp = () => {
     createUser(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        // console.log(user);
 
         const image = data.photo[0];
-        console.log(image);
+        // console.log(image);
         
         const formData = new FormData();
         formData.append("image", image);
@@ -53,7 +53,6 @@ const SignUp = () => {
         })
           .then((res) => res.json())
           .then((imageData) => {
-            setLoading(true);
             if (imageData.status) {
               const userInfo = {
                 displayName: data.name,
@@ -67,7 +66,7 @@ const SignUp = () => {
 
                   //upload cover photo
                   const coverPhoto = data.coverPhoto[0];
-                  console.log(coverPhoto);
+                  // console.log(coverPhoto);
                   
                   const formData = new FormData();
                   formData.append("image", coverPhoto);
@@ -81,9 +80,8 @@ const SignUp = () => {
                     .then((imageData) => {
                       if (imageData.status) {
 
-                        console.log( data?.name, data?.email, imageData.data.url, data?.coverPhoto, data?.address, data?.education );
+                        // console.log( data?.name, data?.email, imageData.data.url, data?.coverPhoto, data?.address, data?.education );
                         saveUser(data?.name, data?.email, profilePhoto, imageData.data.url, data?.address, data?.education);
-                        setLoading(false);
                         toast.success('Account created successfully');
                         navigate('/');
                       }

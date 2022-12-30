@@ -19,6 +19,10 @@ const CreatePost = ( {refetch} ) => {
 
   const handlePost = (data) => {
 
+    if (!user?.email) {
+      return navigate('/login');
+    }
+
   //date of publish
   const date = new Date();
   let day = date.getDate();
@@ -103,17 +107,12 @@ const CreatePost = ( {refetch} ) => {
             name="description" className="textarea textarea-bordered w-full h-32 md:w-2/4" placeholder={`What is your mind? ${user?.displayName}`
           }></textarea>
 
-          {
-            user?.email ?
+          <Link to='/login'>
             <button className="btn btn-primary btn-sm md:btn-md" type="submit">
               <span className="mx-5">Post</span>
-            </button>:
-            <Link to='/login'>
-              <button className="btn btn-primary btn-sm md:btn-md" type="submit">
-                <span className="mx-5">Post</span>
-              </button>
-            </Link>
-          }
+            </button>
+          </Link>
+
           {/* <button className="btn btn-primary btn-sm md:btn-md" type="submit">
             <span className="mx-5">Post</span>
           </button> */}

@@ -5,17 +5,18 @@ import { AuthContext } from "../../Context/AuthProvider/AuthProvider";
 import useCurrentUser from "../../Hooks/useCurrentUser";
 import CreatePost from "../Home/CreatePost/CreatePost";
 import Loading from "../Shared/Loading/Loading";
+import EditModal from "./EditModal/EditModal";
 
 const About = () => {
   const { user } = useContext(AuthContext);
 
-  const [currentUser, isCurrentUserLoading] = useCurrentUser(user?.email);
+  const [currentUser, refetch, isCurrentUserLoading] = useCurrentUser(user?.email);
   // console.log(currentUser);
 
   if (isCurrentUserLoading) {
     return <Loading></Loading>
   }
-
+   
   const { coverPhoto, educationInstitute, userEmail, userName, userPhoto, address } = currentUser;
   
 
@@ -66,7 +67,8 @@ const About = () => {
                   </div>
                 </div>
                 <div>
-                  <button className="btn btn-md btn-success">Update</button>
+                  <label htmlFor="edit-modal" className="btn btn-md btn-success">Edit</label>
+                  <EditModal currentUser={currentUser} refetch={refetch}></EditModal>
                 </div>
               </div>
             </div>
