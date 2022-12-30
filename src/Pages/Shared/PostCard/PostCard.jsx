@@ -114,6 +114,7 @@ const PostCard = ({ post }) => {
               <button className="flex gap-2 items-center">
                   <FaComment className="text-lg"></FaComment> 5
               </button>
+              
             </Link>
             <button className="flex gap-2 items-center">
                 <FaShare className="text-lg"></FaShare><span>Share</span>
